@@ -1,0 +1,81 @@
+version: "3"
+services:
+  nuxt3-app:
+    build:
+      context: .
+      dockerfile: dockerfiles/nuxt3/Dockerfile
+    volumes:
+      - ./nuxt3-app:/app/nuxt3-app
+    ports:
+      - 6010:3000
+    command:
+      sh -c '
+        /bin/rm -rf "/tmp/nitro/worker-*"
+        yarn && yarn dev'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    tty: true
+    stdin_open: true
+    user: "1000:1000"
+  gatsby-app:
+    build:
+      context: .
+      dockerfile: dockerfiles/gatsby/Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - 6020:8000
+    command:
+      sh -c 'gatsby develop --host 0.0.0.0'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    tty: true
+    stdin_open: true
+    user: "1000:1000"
+  qwik-app:
+    build:
+      context: .
+      dockerfile: dockerfiles/qwik/Dockerfile
+    volumes:
+      - ./qwik-app:/app/qwik-app
+    ports:
+      - 6030:5173
+    command:
+      sh -c 'npm run dev -- --host 0.0.0.0'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    tty: true
+    stdin_open: true
+    user: "1000:1000"
+
+  single-spa-app:
+    build:
+      context: .
+      dockerfile: dockerfiles/single-spa/Dockerfile
+    volumes:
+      - ./single-spa-app:/app/single-spa-app
+    ports:
+      - 9000:9000
+    command:
+      sh -c 'yarn && yarn start'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    tty: true
+    stdin_open: true
+    user: "1000:1000"
+  piral-app:
+    build:
+      context: .
+      dockerfile: dockerfiles/piral/Dockerfile
+    volumes:
+      - ./piral-app:/app/piral-app
+    ports:
+      - 9001:1234
+    command:
+      sh -c 'npm install && npm start'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    tty: true
+    stdin_open: true
+    user: "1000:1000"
+
