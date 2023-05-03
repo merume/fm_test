@@ -1,5 +1,5 @@
+import LuigiClient from '@luigi-project/client';
+
 <template>
-  <div>
-    <NuxtWelcome />
-  </div>
+  <h1>Nuxt3 Hello World</h1>
 </template>
